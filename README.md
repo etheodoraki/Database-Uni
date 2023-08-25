@@ -1,7 +1,7 @@
 # Project Documentation - Department Database Implementation
 
 ## Table of Contents
-- [General Description](#description)
+- [General Description](#general-description)
 - [Project Overview](#overview)
 - [ER Diagram](#erdiagram)
 - [Setup](#setup)
@@ -85,7 +85,7 @@ Each semester course has defined grading rules that determine the final grade
 for each student. These rules are established by the instructors and contribute 
 to the student's overall academic performance.
 
-### 11. Functionality Implementation
+### 11. Functionality Implementation <a name="functionality"></a>
 To fulfill the project requirements, the following functionalities were implemented:
 
 1. Data Management (PostgreSQL Functions)
