@@ -1,17 +1,22 @@
 # Project Documentation - Department Database Implementation
 
 ## Table of Contents
-- [General Description](#general-description)
+- [General Description](#description)
 - [Project Overview](#overview)
-- [ER Diagram](#erdiagram)
+- [ER Diagram](#er-diagram)
 - [Setup](#setup)
-- [Database Structure](#dbstructure)
-- [Data Privacy](#dataprivac`y)
-- [Course Management](#cooursemanagement)
-- [Grading Rules](#grading)
+- [Database Structure](#db-structure)
+- [Data Privacy](#data-privacy)
+- [Course Management](#coourse-management)
+- [Grading Rules](#grading-rules)
 - [Functionality Implementation](#functionality)
-  
-### 1. General Description <a name="general-description"></a>
+-- [Data Management](#data-management)
+-- [Data Retrieval](#data-retrieval)
+-- [Triggers](#triggers)
+-- [Views](#views)
+
+
+### 1. General Description <a name="description"></a>
 This project involves the implementation of a database for a university 
 department as part of the Databases course at the Technical University of Crete. 
 The database will encompass all data related to the department and its 
@@ -19,7 +24,7 @@ operations, following the specified requirements. The provided resources include
 an Entity-Relationship (ER) diagram, and an initial dataset backup in 
 PostgreSQL, including sample data.
 
-### 1. Project Overview <a name="project-overview"></a>
+### 1. Project Overview <a name="overview"></a>
 The project's objective is to create a comprehensive database for the university 
 department. It will include information about fields of study, laboratories, 
 courses, as well as faculty, staff, and students. Personal information for all 
@@ -54,7 +59,7 @@ Install PostgreSQL on your local machine.
 Restore the provided database backup file using the PostgreSQL restore command.
 Update the database connection details in the configuration file.
 
-5. Database Structure <a name="database-structure"></a>
+5. Database Structure <a name="db-structure"></a>
 The database consists of several main components:
 
 - Domains: Represent research areas with unique codes, titles, and descriptions.
@@ -85,10 +90,10 @@ Each semester course has defined grading rules that determine the final grade
 for each student. These rules are established by the instructors and contribute 
 to the student's overall academic performance.
 
-### 11. Functionality Implementation <a name="functionality"></a>
+1. Functionality Implementation <a name="functionality"></a>
 To fulfill the project requirements, the following functionalities were implemented:
 
-1. Data Management (PostgreSQL Functions)
+1. Data Management (PostgreSQL Functions) <a name="data-management"></a>
 1.1. Data Insertion Functions
 Functions are created to insert personal data records for professors, lab staff, 
 and students. These functions accept the number of records to generate and 
@@ -114,7 +119,7 @@ Another optional function creates semester-based course offerings for a
 specified future semester. Course information, instructors, lab staff, and lab 
 assignments are copied from the most recent semester for each course.
 
-2. Data Retrieval and Calculation Functions
+2. Data Retrieval and Calculation Functions <a name="data-retrieval"></a>
 2.1. Retrieval of Faculty and Lab Staff
 This function retrieves names and AMKA of professors and lab staff members 
 belonging to laboratories within a specified research area.
@@ -156,7 +161,7 @@ courses they can't or shouldn't take.
 An optional function finds students who have successfully completed all 
 mandatory courses offered in the current semester.
 
-Triggers
+3. Triggers <a name="triggers"></a>
 3.1. Automatic Validity Checks for Semesters:
 
 Ensure that semester start and end dates do not overlap with existing semesters.
@@ -183,7 +188,7 @@ Approve the enrollment if conditions are met, otherwise set the status to
 Prevent insertion or update of records in the "approved" or "rejected" status 
 directly.
 
-Views
+4. Views <a name="views"></a>
 
 4.1. Presentation of Supervisors and Committee for Ungraduated Students' Theses:
 
