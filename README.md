@@ -1,22 +1,22 @@
-# Project Documentation - Department Database Implementation
+# University Department Database Implementation
 
 ## Table of Contents
-[General Description](#description)
-[Project Overview](#overview)
-[ER Diagram](#er-diagram)
-[Setup](#setup)
-[Database Structure](#db-structure)
-[Data Privacy](#data-privacy)
-[Course Management](#coourse-management)
-[Grading Rules](#grading-rules)
-[Functionality Implementation](#functionality)
-- [Data Management](#data-management)
-- [Data Retrieval](#data-retrieval)
--- [Triggers](#triggers)
--- [Views](#views)
+- [General Description](#description)
+- [Project Overview](#overview)
+- [ER Diagram](#er-diagram)
+- [Setup](#setup)
+- [Database Structure](#db-structure)
+- [Data Privacy](#data-privacy)
+- [Course Management](#course-management)
+- [Grading Rules](#grading-rules)
+- [Functionality Implementation](#functionality)
+  - [Data Management](#data-management)
+  - [Data Retrieval](#data-retrieval)
+  - [Triggers](#triggers)
+  - [Views](#views)
 
 
-### 1. General Description <a name="description"></a>
+### General Description <a name="description"></a>
 This project involves the implementation of a database for a university 
 department as part of the Databases course at the Technical University of Crete. 
 The database will encompass all data related to the department and its 
@@ -24,7 +24,7 @@ operations, following the specified requirements. The provided resources include
 an Entity-Relationship (ER) diagram, and an initial dataset backup in 
 PostgreSQL, including sample data.
 
-### 1. Project Overview <a name="overview"></a>
+## Project Overview <a name="overview"></a>
 The project's objective is to create a comprehensive database for the university 
 department. It will include information about fields of study, laboratories, 
 courses, as well as faculty, staff, and students. Personal information for all 
@@ -46,54 +46,54 @@ tutorial support, lab work, and indicative semester of execution (typical
 academic year - winter or spring). The department decides which courses will be 
 taught in each academic semester.
 
-1. ER Diagram <a name="er-diagram"></a>
-The ER diagram outlines the relationships between different entities in the d
-atabase, such as domains, labs, courses, faculty, and students. It serves as a 
+### ER Diagram <a name="er-diagram"></a>
+The ER diagram outlines the relationships between different entities in the 
+database, such as domains, labs, courses, faculty, and students. It serves as a 
 visual representation of the database structure.
-![explanation image](https://github.com/etheodoraki/Database-Uni/blob/main/images/uniDB_ER.png)# Database-Uni
+![explanation image](https://github.com/etheodoraki/Database-Uni/blob/main/images/uniDB_ER.png)
 
-1. Setup <a name="setup"></a>
+### Setup <a name="setup"></a>
 To set up the project, follow these steps:
 
 Install PostgreSQL on your local machine.
 Restore the provided database backup file using the PostgreSQL restore command.
 Update the database connection details in the configuration file.
 
-5. Database Structure <a name="db-structure"></a>
+### Database Structure <a name="db-structure"></a>
 The database consists of several main components:
 
-- Domains: Represent research areas with unique codes, titles, and descriptions.
-- Labs: Correspond to labs supporting educational activities, each associated 
+- **Domains**: Represent research areas with unique codes, titles, and descriptions.
+- **Labs**: Correspond to labs supporting educational activities, each associated 
 with a domain and having a unique code, title, and description.
-- Faculty: Includes teaching staff categorized by ranks (regular, associate, 
+- **Faculty**: Includes teaching staff categorized by ranks (regular, associate, 
 assistant, lecturer).
-- Laboratory Staff: Comprises personnel categorized by grades (A, B, C, D).
-- Courses: Encompass semester-based courses with unique codes, titles, 
+- **Laboratory Staff**: Comprises personnel categorized by grades (A, B, C, D).
+- **Courses**: Encompass semester-based courses with unique codes, titles, 
 descriptions, teaching units, weekly teaching hours, and lab requirements.
-- Students: Store personal data for students, including unique identification 
+- **Students**: Store personal data for students, including unique identification 
 numbers, names, surnames, emails, registration dates, and semester information.
 
-1. Data Privacy <a name="data-privacy"></a>
+### Data Privacy <a name="data-privacy"></a>
 All personal data of department members (faculty, staff, and students) is 
 carefully maintained in compliance with data protection regulations. This data 
 includes unique identification numbers (AMKA), names, surnames, father's names, 
 email addresses, and more.
 
-1. Course Management <a name="course-management"></a>
+### Course Management <a name="course-management"></a>
 The department organizes courses on a semester basis. Each course has a unique 
 code and holds information regarding its title, description, teaching units, 
 weekly teaching hours, lab requirements, and indicative semester of execution 
 (typical academic year - winter, spring).
 
-1. Grading Rules <a name="grading-rules"></a>
+### Grading Rules <a name="grading-rules"></a>
 Each semester course has defined grading rules that determine the final grade 
 for each student. These rules are established by the instructors and contribute 
 to the student's overall academic performance.
 
-1. Functionality Implementation <a name="functionality"></a>
+## Functionality Implementation <a name="functionality"></a>
 To fulfill the project requirements, the following functionalities were implemented:
 
-1. Data Management (PostgreSQL Functions) <a name="data-management"></a>
+### 1. Data Management (PostgreSQL Functions) <a name="data-management"></a>
 1.1. Data Insertion Functions
 Functions are created to insert personal data records for professors, lab staff, 
 and students. These functions accept the number of records to generate and 
@@ -119,7 +119,7 @@ Another optional function creates semester-based course offerings for a
 specified future semester. Course information, instructors, lab staff, and lab 
 assignments are copied from the most recent semester for each course.
 
-2. Data Retrieval and Calculation Functions <a name="data-retrieval"></a>
+### 2. Data Retrieval and Calculation Functions <a name="data-retrieval"></a>
 2.1. Retrieval of Faculty and Lab Staff
 This function retrieves names and AMKA of professors and lab staff members 
 belonging to laboratories within a specified research area.
@@ -161,7 +161,7 @@ courses they can't or shouldn't take.
 An optional function finds students who have successfully completed all 
 mandatory courses offered in the current semester.
 
-3. Triggers <a name="triggers"></a>
+### 3. Triggers <a name="triggers"></a>
 3.1. Automatic Validity Checks for Semesters:
 
 Ensure that semester start and end dates do not overlap with existing semesters.
@@ -188,7 +188,7 @@ Approve the enrollment if conditions are met, otherwise set the status to
 Prevent insertion or update of records in the "approved" or "rejected" status 
 directly.
 
-4. Views <a name="views"></a>
+### 4. Views <a name="views"></a>
 
 4.1. Presentation of Supervisors and Committee for Ungraduated Students' Theses:
 
