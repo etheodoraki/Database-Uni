@@ -1,17 +1,17 @@
 # Project Documentation - Department Database Implementation
 
 ## Table of Contents
-- [General Description](#description)
-- [Project Overview](#overview)
-- [ER Diagram](#er-diagram)
-- [Setup](#setup)
-- [Database Structure](#db-structure)
-- [Data Privacy](#data-privacy)
-- [Course Management](#coourse-management)
-- [Grading Rules](#grading-rules)
-- [Functionality Implementation](#functionality)
--- [Data Management](#data-management)
--- [Data Retrieval](#data-retrieval)
+[General Description](#description)
+[Project Overview](#overview)
+[ER Diagram](#er-diagram)
+[Setup](#setup)
+[Database Structure](#db-structure)
+[Data Privacy](#data-privacy)
+[Course Management](#coourse-management)
+[Grading Rules](#grading-rules)
+[Functionality Implementation](#functionality)
+- [Data Management](#data-management)
+- [Data Retrieval](#data-retrieval)
 -- [Triggers](#triggers)
 -- [Views](#views)
 
