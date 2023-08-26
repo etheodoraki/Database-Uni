@@ -16,6 +16,10 @@
   - [Java Application Integration with PostgreSQL Database via JDBC:](#java-application-integration-with-postgresql-database-via-jdbc)
   - [Construction of Updatable Views:](#construction-of-updatable-views)
   - [Performance Study and Physical Design:](#performance-study-and-physical-design)
+    - [Using different index types:](#using-different-index-types)
+    - [Using clustering:](#using-clustering)
+    - [Increasing student data (by 2000):](#increasing-student-data-by-2000)
+    - [Conclusion:](#conclusion)
 
 
 ### Description <a name="description"></a>
@@ -242,10 +246,6 @@ Professor tables, triggering changes in Covers table.
 - Query task: Find students with entry dates after 1/9/2010 and before 1/9/2012, 
 who have passed a course with a grade greater than 9, and the course instructor 
 has the same name as the student.
-![q1](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q1.png)
-![q2](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q2.png)
-![q3](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q3.png)
-![q4](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q4.png)
 
 <!-- - Start with a relatively small number of students.
 - Use EXPLAIN ANALYSE to analyze query performance, recording results and 
@@ -261,3 +261,45 @@ including corresponding course records and grades.
 - Delete previously created indexes.
 - Reevaluate execution plans before and after index creation, documenting 
 observations for each step in the report. -->
+
+In order to have a comprehensive picture of the performance of the query, we 
+first ran the above query on the relatively small database that was given to us 
+initially. 
+![q1](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q1.png)
+
+### Using different index types:
+One of the ways to improve the execution time of a query is to use indexes. By 
+implementing indexes on the appropriate fields, serial reading of an array can 
+be avoided, since the rows that match the conditions are selected more quickly.
+Hash indexes are only suitable for equality queries, while b-tree indexes can 
+handle equality but also range queries, as is the question given to us. 
+Both were applied to observe the differences.
+
+B-Tree
+![q2](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q2.png)
+The PostegreSQL query planner will use the B-tree index criterion, where the 
+indexed column is involved in a comparison relation using the following 
+operators: < , <= ,= ,>=,>. It's not always the fastest way compared to a simple 
+scan and sort but it can prove to be helpful in some cases.
+
+Hash
+![q3](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q3.png)
+The Hash indexes can only handle simple equality relations and point queries 
+where we are interested in a value or a very small set of values. The optimizer 
+will use a Hash criterion whenever an indexed column is involved in relation to 
+the equality operator '='. It is of no use at all for range queries
+
+### Using clustering:
+![q4](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q4.png)
+
+### Increasing student data (by 2000):
+Without indexes:
+![incr-noindex](https://github.com/etheodoraki/Database-Uni/blob/main/images/incr-noindex.png)
+
+Clustering with B-tree:
+![incr-clust](https://github.com/etheodoraki/Database-Uni/blob/main/images/incr-clust.png)
+
+### Conclusion:
+In the case of few data the use of hash index can improve the speed, but in the 
+case of a large amount of data the use of Clustering with B-tree index is more 
+efficient.
