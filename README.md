@@ -13,13 +13,13 @@
     - [2. Data Retrieval and Calculation Functions ](#2-data-retrieval-and-calculation-functions-)
     - [3. Triggers ](#3-triggers-)
     - [4. Views ](#4-views-)
-  - [Java Application Integration with PostgreSQL Database via JDBC:](#java-application-integration-with-postgresql-database-via-jdbc)
-  - [Construction of Updatable Views:](#construction-of-updatable-views)
-  - [Performance Study and Physical Design:](#performance-study-and-physical-design)
-    - [Using different index types:](#using-different-index-types)
-    - [Using clustering:](#using-clustering)
-    - [Increasing student data (by 2000):](#increasing-student-data-by-2000)
-    - [Conclusion:](#conclusion)
+  - [Java Application Integration with PostgreSQL Database via JDB](#java-application-integration-with-postgresql-database-via-jdbc)
+  - [Construction of Updatable Views](#construction-of-updatable-views)
+  - [Performance Study and Physical Design](#performance-study-and-physical-design)
+    - [Using different index types](#using-different-index-types)
+    - [Using clustering](#using-clustering)
+    - [Increasing student data (by 2000)](#increasing-student-data-by-2000)
+    - [Conclusion](#conclusion)
 
 
 ### Description <a name="description"></a>
@@ -246,21 +246,6 @@ Professor tables, triggering changes in Covers table.
 - Query task: Find students with entry dates after 1/9/2010 and before 1/9/2012, 
 who have passed a course with a grade greater than 9, and the course instructor 
 has the same name as the student.
-
-<!-- - Start with a relatively small number of students.
-- Use EXPLAIN ANALYSE to analyze query performance, recording results and 
-observations.
-- Sequentially create appropriate indexes to accelerate query execution. 
-- Document index choices and their impact on execution plans.
-- Minimize index usage to avoid update performance degradation.
-- Study different index types and note differences observed.
-- Optimize further by utilizing clustering for acceleration. 
-- Record observations.
-- Increase student data significantly (as demonstrated in Lab Exercise 7), 
-including corresponding course records and grades.
-- Delete previously created indexes.
-- Reevaluate execution plans before and after index creation, documenting 
-observations for each step in the report. -->
 
 In order to have a comprehensive picture of the performance of the query, we 
 first ran the above query on the relatively small database that was given to us 
