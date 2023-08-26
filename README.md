@@ -1,21 +1,20 @@
-# University Department Database Implementation
+# University Department Database 
 
-- [University Department Database Implementation](#university-department-database-implementation)
-    - [Description ](#description-)
-    - [Database Structure ](#database-structure-)
-    - [Data Privacy ](#data-privacy-)
-    - [Course Management ](#course-management-)
-    - [Grading Rules ](#grading-rules-)
-    - [ER Diagram ](#er-diagram-)
-    - [Setup ](#setup-)
-  - [Functionality Implementation ](#functionality-implementation-)
+- [Description ](#description-)
+- [Database Structure ](#database-structure-)
+- [Data Privacy ](#data-privacy-)
+- [Course Management ](#course-management-)
+- [Grading Rules ](#grading-rules-)
+- [ER Diagram ](#er-diagram-)
+- [Setup ](#setup-)
+- [Functionality Implementation ](#functionality-implementation-)
     - [1. Data Management (PostgreSQL Functions) ](#1-data-management-postgresql-functions-)
     - [2. Data Retrieval and Calculation Functions ](#2-data-retrieval-and-calculation-functions-)
     - [3. Triggers ](#3-triggers-)
     - [4. Views ](#4-views-)
-  - [Java Application Integration with PostgreSQL Database via JDB](#java-application-integration-with-postgresql-database-via-jdbc)
-  - [Construction of Updatable Views](#construction-of-updatable-views)
-  - [Performance Study and Physical Design](#performance-study-and-physical-design)
+- [Java Application Integration with PostgreSQL Database via JDB](#java-application-integration-with-postgresql-database-via-jdbc)
+- [Construction of Updatable Views](#construction-of-updatable-views)
+- [Performance Study and Physical Design](#performance-study-and-physical-design)
     - [Using different index types](#using-different-index-types)
     - [Using clustering](#using-clustering)
     - [Increasing student data (by 2000)](#increasing-student-data-by-2000)
@@ -250,6 +249,7 @@ has the same name as the student.
 In order to have a comprehensive picture of the performance of the query, we 
 first ran the above query on the relatively small database that was given to us 
 initially. 
+
 ![q1](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q1.png)
 
 ### Using different index types:
