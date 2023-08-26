@@ -261,27 +261,34 @@ handle equality but also range queries, as is the question given to us.
 Both were applied to observe the differences.
 
 B-Tree
+
 ![q2](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q2.png)
+
 The PostegreSQL query planner will use the B-tree index criterion, where the 
 indexed column is involved in a comparison relation using the following 
 operators: < , <= ,= ,>=,>. It's not always the fastest way compared to a simple 
 scan and sort but it can prove to be helpful in some cases.
 
 Hash
+
 ![q3](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q3.png)
+
 The Hash indexes can only handle simple equality relations and point queries 
 where we are interested in a value or a very small set of values. The optimizer 
 will use a Hash criterion whenever an indexed column is involved in relation to 
 the equality operator '='. It is of no use at all for range queries
 
 ### Using clustering:
+
 ![q4](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q4.png)
 
 ### Increasing student data (by 2000):
 Without indexes:
+
 ![incr-noindex](https://github.com/etheodoraki/Database-Uni/blob/main/images/incr-noindex.png)
 
 Clustering with B-tree:
+
 ![incr-clust](https://github.com/etheodoraki/Database-Uni/blob/main/images/incr-clust.png)
 
 ### Conclusion:
