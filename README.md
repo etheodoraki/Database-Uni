@@ -1,77 +1,59 @@
 # University Department Database Implementation
 
-## Table of Contents
-- [General Description](#description)
-- [Project Overview](#overview)
-- [ER Diagram](#er-diagram)
-- [Setup](#setup)
-- [Database Structure](#db-structure)
-- [Data Privacy](#data-privacy)
-- [Course Management](#course-management)
-- [Grading Rules](#grading-rules)
-- [Functionality Implementation](#functionality)
-  - [Data Management](#data-management)
-  - [Data Retrieval](#data-retrieval)
-  - [Triggers](#triggers)
-  - [Views](#views)
+- [University Department Database Implementation](#university-department-database-implementation)
+    - [Description ](#description-)
+    - [Database Structure ](#database-structure-)
+    - [Data Privacy ](#data-privacy-)
+    - [Course Management ](#course-management-)
+    - [Grading Rules ](#grading-rules-)
+    - [ER Diagram ](#er-diagram-)
+    - [Setup ](#setup-)
+  - [Functionality Implementation ](#functionality-implementation-)
+    - [1. Data Management (PostgreSQL Functions) ](#1-data-management-postgresql-functions-)
+    - [2. Data Retrieval and Calculation Functions ](#2-data-retrieval-and-calculation-functions-)
+    - [3. Triggers ](#3-triggers-)
+    - [4. Views ](#4-views-)
+  - [Java Application Integration with PostgreSQL Database via JDBC:](#java-application-integration-with-postgresql-database-via-jdbc)
+  - [Construction of Updatable Views:](#construction-of-updatable-views)
+  - [Performance Study and Physical Design:](#performance-study-and-physical-design)
 
 
-### General Description <a name="description"></a>
+### Description <a name="description"></a>
 This project involves the implementation of a database for a university 
 department as part of the Databases course at the Technical University of Crete. 
-The database will encompass all data related to the department and its 
-operations, following the specified requirements. The provided resources include 
+The database will contain all data related to the department and its 
+operations, following the specified requirements. The provided resources are 
 an Entity-Relationship (ER) diagram, and an initial dataset backup in 
 PostgreSQL, including sample data.
 
-## Project Overview <a name="overview"></a>
 The project's objective is to create a comprehensive database for the university 
 department. It will include information about fields of study, laboratories, 
-courses, as well as faculty, staff, and students. Personal information for all 
-department members, such as professors, lab staff, and students, is crucial and 
-includes unique identifiers (AMKA), names, surnames, father's names, and email 
-addresses. Students additionally require details like enrollment number and 
-registration date.
-Professors are classified into ranks (regular, associate, assistant, lecturer), 
-while lab staff is categorized into levels (A, B, C, D). The department is 
-divided into research areas characterized by codes, titles, and descriptions. 
-Laboratories support educational activities and are assigned to specific 
-research areas. Each lab is identified by a unique code, title, and description, 
-with professors and lab staff members assigned to them. Every lab is overseen by 
-a professor, who must be of the highest rank and cover one or more knowledge 
-domains denoted by three-letter codes (e.g., CS, EDU, AI).
-All courses are semester-based. Each course has a unique code and contains 
-information about its title, description, teaching units, weekly lecture hours, 
-tutorial support, lab work, and indicative semester of execution (typical 
-academic year - winter or spring). The department decides which courses will be 
-taught in each academic semester.
-
-### ER Diagram <a name="er-diagram"></a>
-The ER diagram outlines the relationships between different entities in the 
-database, such as domains, labs, courses, faculty, and students. It serves as a 
-visual representation of the database structure.
-![explanation image](https://github.com/etheodoraki/Database-Uni/blob/main/images/uniDB_ER.png)
-
-### Setup <a name="setup"></a>
-To set up the project, follow these steps:
-
-Install PostgreSQL on your local machine.
-Restore the provided database backup file using the PostgreSQL restore command.
-Update the database connection details in the configuration file.
+courses, as well as professors, staff, and students. Personal information for 
+all department members, such as professors, lab staff, and students, is crucial 
+and includes unique identifiers (AMKA), names, surnames, father's names, and 
+email addresses. Students additionally require details like enrollment number 
+and registration date.
 
 ### Database Structure <a name="db-structure"></a>
 The database consists of several main components:
 
-- **Domains**: Represent research areas with unique codes, titles, and descriptions.
-- **Labs**: Correspond to labs supporting educational activities, each associated 
-with a domain and having a unique code, title, and description.
-- **Faculty**: Includes teaching staff categorized by ranks (regular, associate, 
-assistant, lecturer).
-- **Laboratory Staff**: Comprises personnel categorized by grades (A, B, C, D).
+- **Domains**: Represent research areas with unique codes (e.g., COMP, AIS, 
+ACE), titles,and descriptions.
+- **Laboratories**: Correspond to labs supporting educational activities, each 
+associated with a domain and having a unique code, title, and description with 
+professors and labstaff members assigned to them. Every lab is overseen by a 
+professor, who must be of thehighest rank and cover one or more knowledge 
+domains.
 - **Courses**: Encompass semester-based courses with unique codes, titles, 
-descriptions, teaching units, weekly teaching hours, and lab requirements.
-- **Students**: Store personal data for students, including unique identification 
-numbers, names, surnames, emails, registration dates, and semester information.
+descriptions, teaching units, weekly teaching hours, tutorial support lab work, 
+and indicative semester of execution (typical academic year - winter or spring). 
+Thedepartment decides which courses will be taught in each academic semester.
+- **Profesors**: Includes teaching staff categorized by ranks (regular, 
+associate, assistant, lecturer).
+- **Laboratory Staff**: Comprises personnel categorized by levels (A, B, C, D).
+- **Students**: Store personal data for students, including unique 
+identification numbers, names, surnames, emails, registration dates, and 
+semester information.
 
 ### Data Privacy <a name="data-privacy"></a>
 All personal data of department members (faculty, staff, and students) is 
@@ -89,9 +71,38 @@ weekly teaching hours, lab requirements, and indicative semester of execution
 Each semester course has defined grading rules that determine the final grade 
 for each student. These rules are established by the instructors and contribute 
 to the student's overall academic performance.
+The written examination's participation percentage contributes to the final 
+grade. For non-laboratory courses, the participation percentage is 100%. If a 
+course is a laboratory course and requires a laboratory grade above a minimum 
+threshold, this threshold is recorded. If there's no threshold, it's set to 
+zero. Similarly, if a laboratory course requires a minimum written examination 
+grade,the minimum is recorded. If there's no minimum, it's set to zero.
+Final Grade Calculation:
+- For non-laboratory courses, the final grade is the same as the written 
+examination grade (weighted 100%).
+- If the laboratory grade is strictly lower than the threshold, the final grade 
+is zero.
+- If the written examination grade is strictly lower than the threshold, the 
+final grade is the written examination grade.
+- For all other cases, a combination of the laboratory and written examination 
+grades is calculated based on participation percentages and used to determine 
+the final grade.
+
+### ER Diagram <a name="er-diagram"></a>
+The ER diagram outlines the relationships between different entities in the 
+database, such as domains, labs, courses, faculty, and students. It serves as a 
+visual representation of the database structure.
+![explanation image](https://github.com/etheodoraki/Database-Uni/blob/main/images/uniDB_ER.png)
+
+### Setup <a name="setup"></a>
+To set up the project, follow these steps:
+
+Restore the provided database backup file using the PostgreSQL restore command.
+Update the database connection details in the configuration file.
 
 ## Functionality Implementation <a name="functionality"></a>
-To fulfill the project requirements, the following functionalities were implemented:
+To fulfill the project requirements, the following functionalities were 
+implemented:
 
 ### 1. Data Management (PostgreSQL Functions) <a name="data-management"></a>
 1.1. Data Insertion Functions
@@ -100,7 +111,8 @@ and students. These functions accept the number of records to generate and
 create data using randomly selected Greek names and surnames. For student data, 
 enrollment dates are considered. Student enrollment numbers follow a specific 
 format (EEEEEAAAAAA, where EEEEE is the enrollment year, and AAAAAA is a unique 
-incrementing number).
+incrementing number). The ranks of professors, the levels of lab staff, and 
+the lab code are generated randomly from the possible range of values.
 
 1.2. Grade Entry Function
 A function is implemented to insert grades for enrolled students in courses of a 
@@ -108,15 +120,15 @@ specified semester. Random integer values from 1 to 10 are used for exam grades.
 If the course includes lab work, lab grades are also inserted. If grades already 
 exist for certain students, the function updates them accordingly.
 
-1.3. Proposed Records Generation (Optional)
-A function (optional) generates proposed course registrations for all students 
-based on their current semester, considering prerequisites and past courses 
-taken. The number of proposed registrations per student is capped at six, 
-prioritizing courses from earlier semesters.
+1.3. Proposed Records Generation
+A function generates proposed course registrations for all students based on 
+their current semester, considering prerequisites and past courses taken. The 
+number of proposed registrations per student is capped at six, prioritizing 
+courses from earlier semesters.
 
-1.4. Future Course Creation (Optional)
-Another optional function creates semester-based course offerings for a 
-specified future semester. Course information, instructors, lab staff, and lab 
+1.4. Future Course Creation
+Another function creates semester-based course offerings for a specified 
+future semester. Course information, instructors, lab staff, and lab 
 assignments are copied from the most recent semester for each course.
 
 ### 2. Data Retrieval and Calculation Functions <a name="data-retrieval"></a>
@@ -141,7 +153,7 @@ Retrieves course codes and titles of mandatory courses that are supposed to be
 taught in the current semester but aren't scheduled.
 
 2.6. Instructor with Most Courses Taught
-Finds the instructor(s) with the highest number of courses taught, considering 
+Finds the professor(s) with the highest number of courses taught, considering 
 only completed semesters.
 
 2.7. Top Achievers by Course
@@ -152,10 +164,10 @@ specified course and semester.
 Calculates the total workload (lecture, tutorial, and lab hours) for a student 
 in the current semester.
 
-2.9. Dependency Analysis (Optional)
-An optional function identifies courses that a student shouldn't attend based on 
-prerequisites or recommended courses. It helps students avoid registering for 
-courses they can't or shouldn't take.
+2.9. Dependency Analysis
+Identifies courses that a student shouldn't attend based on prerequisites or 
+recommended courses. It helps students avoid registering for courses they 
+can't or shouldn't take.
 
 2.10. Successful Completion of All Mandatory Courses (Optional)
 An optional function finds students who have successfully completed all 
@@ -163,18 +175,16 @@ mandatory courses offered in the current semester.
 
 ### 3. Triggers <a name="triggers"></a>
 3.1. Automatic Validity Checks for Semesters:
-
 Ensure that semester start and end dates do not overlap with existing semesters.
 Enforce chronological consistency of semester states (past, present, future).
 Prevent multiple semesters with the "present" state.
-3.2. Automatic Calculation of Final Grades:
 
+3.2. Automatic Calculation of Final Grades:
 Automatically calculate the final grade and pass/fail status for student records 
 based on individual component grades.
 Apply the grading rules described in section I.
 
 3.3. Auto-compute Academic Year and Season:
-
 Calculate the generated attributes 'academic_year' and 'academic_season' when 
 inserting or updating records in the Semester table.
 
@@ -191,14 +201,63 @@ directly.
 ### 4. Views <a name="views"></a>
 
 4.1. Presentation of Supervisors and Committee for Ungraduated Students' Theses:
-
 Create a view that presents the supervisor and committee members for the theses 
 of students who haven't graduated yet.
 The view includes columns for student ID (ΑΜΚΑ) and committee members' names.
 
 4.2. Retrieving the Number of Students per Enrollment Year:
-
 Create a view that retrieves the count of students per enrollment year for the 
 last 10 years.
 Count students who meet graduation requirements and haven't graduated yet.
 Result includes columns for year and count.
+
+
+## Java Application Integration with PostgreSQL Database via JDBC:
+A Java application using Eclipse and the JDBC guide provided with PostgreSQL 11.
+
+The application should offer a menu for the following options:
+1. Enter connection details for a specific PostgreSQL database (IP address, 
+database name, username, password).
+2. Validate Current Transaction / Start New.
+3. Cancel Current Transaction.
+4. Display all labs (code, title, field).
+5. Display all knowledge areas (code, title).
+6. Change lab name using specific code entered by the user.
+7. Change knowledge area title using specific code entered by the user.
+8. Enter grades for a specific course code in the current semester.
+9. Revert a specific number of recent grade entries.
+
+## Construction of Updatable Views:
+An updatable view for a relevant database table and test its functionality.
+
+1. Build a view displaying all department labs' information, including 
+director's full name, contact email, title, knowledge areas, and sector.
+2. Make this complex view updatable by implementing suitable INSTEAD OF 
+triggers.
+3. Updates to the view should correspondingly affect fields in the Lab and 
+Professor tables, triggering changes in Covers table.
+
+## Performance Study and Physical Design:
+
+- Query task: Find students with entry dates after 1/9/2010 and before 1/9/2012, 
+who have passed a course with a grade greater than 9, and the course instructor 
+has the same name as the student.
+![q1](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q1.png)
+![q2](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q2.png)
+![q3](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q3.png)
+![q4](https://github.com/etheodoraki/Database-Uni/blob/main/images/Q4.png)
+
+<!-- - Start with a relatively small number of students.
+- Use EXPLAIN ANALYSE to analyze query performance, recording results and 
+observations.
+- Sequentially create appropriate indexes to accelerate query execution. 
+- Document index choices and their impact on execution plans.
+- Minimize index usage to avoid update performance degradation.
+- Study different index types and note differences observed.
+- Optimize further by utilizing clustering for acceleration. 
+- Record observations.
+- Increase student data significantly (as demonstrated in Lab Exercise 7), 
+including corresponding course records and grades.
+- Delete previously created indexes.
+- Reevaluate execution plans before and after index creation, documenting 
+observations for each step in the report. -->
